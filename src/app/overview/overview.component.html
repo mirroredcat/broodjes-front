@@ -1,0 +1,52 @@
+<div *ngIf="!sessions"
+     style=" display: flex;  align-items: center; justify-content: center ; margin: 5em; flex-direction: column">
+  <h2>Please log in first</h2>
+</div>
+
+<div *ngIf="sessions">
+  <div *ngIf="!dayMenu" style=" display: flex;  align-items: center; justify-content: center; margin: 5em; flex-direction: column">
+    <div>
+    <p>Please select restaurant</p>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Restaurant</mat-label>
+      <mat-select name="restaurant" [formControl]="$any(entityForm.controls['restaurant'])">
+        <mat-option *ngFor="let restaurant of restaurantList" [value]="restaurant.companyName" >{{restaurant.companyName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--
+  <select name="restaurant" [formControl]="$any(entityForm.controls['restaurant'])" >
+    <option *ngFor="let restaurant of restaurantList" [value]="restaurant.companyName" >{{restaurant.companyName}}</option>
+  </select>
+  -->
+    <mat-action-row>
+      <button mat-flat-button color="accent" (click)="select()">Choose</button>
+    </mat-action-row>
+</div>
+
+  <div *ngIf="dayMenu"  style=" display: flex;  align-items: flex-start; justify-content: center ; margin-left: 20em; flex-direction: column">
+  <div>
+    <ng-container >
+      <button class="btn btn-primary action-btn-class" (click)="printOrder()">
+        Print order
+      </button>
+    </ng-container>
+    <br>
+    <table class="full-width-table" mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.personName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Order status" >
+        <th mat-header-cell *matHeaderCellDef>Order status</th>
+        <td mat-cell *matCellDef="let element">{{ element.sandwichName }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+

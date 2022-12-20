@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div style=" display: flex;  align-items: center; justify-content: center; margin: 5em; flex-direction: column">
+    <div>
+      <p>Choose your course</p>
+    </div>
+
+      <select name="course" [formControl]="$any(entityForm.controls['course'])" (change)="setSelectedSession(); getStudentList()">
+        <option  *ngFor="let session of sessions" [value]="session.id" >{{session.course.courseName}}</option>
+
+      </select>
+  </div>
+  <div *ngIf="selectedSession">
+    <label>Choose your name</label><br>
+      <select name="student" [formControl]="$any(entityForm.controls['student'])" >
+        <option *ngFor="let student of studentList" [value]="student.id" >{{student.firstName + ' ' + student.lastName}}</option>
+      </select>
+  </div>
+    <!--
+    <div>
+      <a [routerLink]="/login"><small>Not a student? Login</small></a>
+    </div>
+    -->
+  <br>
+    <button class="btn btn-primary" type="submit" (click)="submit()">Login</button>
+
+</div>

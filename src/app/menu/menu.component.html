@@ -1,0 +1,57 @@
+
+<div *ngIf="!dayMenu"
+     style=" display: flex;  align-items: center; justify-content: center ; margin: 5em; flex-direction: column">
+  <h2>Menu is not yet set, try again later!</h2>
+</div>
+
+<div *ngIf="dayMenu" style=" display: flex;  align-items: center; justify-content: center ; margin: 5em; flex-direction: column">
+  <div>
+    <h1>Hello {{currentPerson.firstName}}</h1>
+    <p>Today's menu is from {{selectedRestaurant}}<p>
+  </div>
+  <div *ngFor="let categ of categories">
+    <h3>{{categ.name}}</h3>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let sandwich of categ.sandwiches"  (opened)="panelOpenToggle()"(closed)="panelOpenToggle()" >
+        <mat-expansion-panel-header>
+          <mat-panel-title >
+            {{sandwich.sandwichName}}
+          </mat-panel-title>
+          <mat-panel-description *ngIf="sandwich.ingredients">
+            {{sandwich.ingredients}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bread option</mat-label>
+          <mat-select #bread (selectionChange)="setBread(bread.value)">
+            <mat-option value="white">White</mat-option>
+            <mat-option value="brown">Brown</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Veggies</mat-label>
+          <mat-select #veg (selectionChange)="setVeggies(veg.value)">
+            <mat-option *ngIf="categ =='vegan'" value="grilled">Grilled</mat-option>
+            <mat-option value="yes">Fresh</mat-option>
+            <mat-option value="no">None</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label >Comments</mat-label>
+          <input matInput placeholder="ex:no butter" #comment (change)="setComment(comment.value)">
+        </mat-form-field>
+
+        <mat-action-row>
+          <button mat-flat-button color="accent" (click)="order(sandwich.sandwichName)">Order</button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+
+
+    </mat-accordion>
+  </div>
+  <br>
+</div>
